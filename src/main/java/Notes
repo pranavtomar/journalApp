@@ -1,0 +1,241 @@
+
+
+pom.xml -> project object model Extensible Markup Language.
+
+
+
+Dependency co-ordinates -> GAV(groupID, artifactID, version)
+
+
+
+POJO -> Plain Old Java Object (It's a term used to describe a Java object that's not restricted
+by any special conventions, frameworks, or models. POJO classes are simple and reusable, and can
+be used by any Java program because they're not tied to any specific Java framework.)
+
+
+
+ORM(Object Relational Model) -> ORM is a technique used to map Java objects to database table.
+--> ORM allows developer to work with databases using object-oriented programming concepts, making
+it easier to interacts with relational databases.
+Example -> Consider a Java class User and database table users. ORM framework like Hibernate can map
+the field in the User class to columns in user table, making easier to insert, update, retrieve, and
+delete records.
+
+
+
+JPA(Java Persistence{Permanently stored data} API{set of rules}) -> JPA is a way or set of rule to achieve
+ORM and which includes interface and annotations that you use in your Java classes, JPA require a persistence
+provider (ORM tools) for implementation.
+-> To use JPA, you need a persistence provider. A persistence provider is a specific implementation of JPA
+specification.
+Examples of JPA persistence provider includes Hibernate, EclipseLink, and OpenJPA. These providers implement
+the JPA interfaces and provide the underlying functionality to interact with databases.
+
+
+
+Spring Data JPA -> It is built on the top of the JPA(Java persistence API) specification, but it is not
+JPA implementation itself. Instead, it simplifies working with JPA by providing higher level abstractions
+and utilities. However, to use Spring Data JPA effectively, you still need JPA implementations, such as
+Hibernate, EclipseLink, and another JPA-compliant provider, to handle the actual database interactions.
+
+-> JPA is primarily designed for working with relational databases, where data is stored in table with a
+predefine schema. MongoDB, on the other hand is a NoSQL database that uses different data-model, typically
+based on collections of documents, which are schema-less or have flexible schemas. Due to this fundamental
+difference in data-models and storage structures, JPA is not used used with MongoDB.
+
+
+
+-> In the case of MongoDB, you don't have traditional JPA persistence provider.
+-> While MongoDB is a NoSQL database, so "Spring Data MongoDB" serves as the "persistence provider" for
+MongoDB.
+-> "Spring Data MongoDB" provides the necessary abstractions and implementations to work with
+MongoDB in a Spring application.
+
+Spring Data MongoDB Dependency ->
+<dependency>
+    <groupId> org.springframework.boot </groupId>
+    <artifactId> spring-boot-starter-data-mongodb </artifactId>
+</dependency>
+
+"Query Method DSL" and "Criteria API" are two different ways to interact with database when using
+"Spring Data JPA" for relational databases and "Spring Data MongoDB" for MongoDB databases.
+
+"Query Method DSL" is a simple and convenient way to create queries based on method naming conventions,
+while the "Criteria API" offer the the more dynamic and programmatic approach for building complex and
+custom queries.
+
+
+ResponseEntity Class -: The ResponseEntity class is part of the Spring Framework and is commonly used in
+Spring Boot applications to customize the HTTP response.
+Response Entity provides methods for setting the response status, header and body. You can use
+ResponseEntity to return different types of data in your controller methods such as JSON, XML,
+or even HTML.
+Even you can use generics with ResponseEntity to specify the type of data you are returning.
+
+
+Lombok :- It aims to reduce the boilerplate code that developers have to write, such as getters, setters, constructors
+and more. Lombok achieve this by generating this code automatically during compilation, based on annotations you add to
+your Java classes.
+Lombok generates bytecodes for methods like getters, setters, constructors, equals(), hashcode(), and toString(), as
+specified by annotations used in your code. This generated code is added to the compiled class files (.class files).
+The Java Compiler compiles your classes, including the generated code. This means that the generated methods become
+part of your compiled class files.
+Then When you run your application, the generated methods are available for use, just like any other methods in your
+classes.
+
+
+
+Spring Security :- Spring Security is a powerful and highly customizable security framework that is often used in Spring
+boot applications to handle authentication and authorization.
+
+Spring Security Configuration :-
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+    <version>3.4.1</version>
+</dependency>
+
+Once the dependency is added, Spring boot's auto-configuration feature will automatically apply security security to the
+application.
+
+By-default, Spring Security uses "HTTP Basic Authentication".
+
+Basic authentication means the client sends Authorization header -> "Authorization: Basic<encoded string>". The server
+decodes the string, extract the username and password, and verifies them. If they are correct, access is granted.
+Otherwise, an "Unauthorized" response is sent back.
+
+Encoding credentials are combined into a string like "username: password", which is then encoded using Base64.
+
+By default, all endpoints will be secured. Spring security will generate a default user with a random password that is
+printed in console logs on startup.
+
+You can also configure username and password in your application.properties.
+spring.security.user.name = user
+spring.security.user.password = password
+
+@EnableWebSecurity :- EnableWebSecurity annotation signals spring to enable its web security support. This is what makes
+your application secured. It's used in conjunction with @Configuration.
+
+WebSecurityConfigurerAdapter :- WebSecurityConfigurerAdapter is a utility class in the Spring Security Framework that
+provides default configurations and allows customization of certain features. By extending it, you can configure and
+customize Spring Security for your application needs.
+
+http.authorizeRequests():- This tells Spring Security to start authorizing the requests.
+
+.antMatchers("/hello").permitAll():- This part specifies that HTTP requests matching the path /hello should be permitted
+(allowed) for all users, whether they are authenticated or not.
+
+.anyRequest().authenticated():- This is more general matcher that specifies any request(not already matched by previous
+matchers) should be authenticated, meaning users have to provide valid credentials to access these endpoints.
+
+.and():- this is a method to join several configurations. It helps to continue the configuration from root(HttpSecurity).
+
+.formLogin():- This enables form-based authentication. By default, It will provide a form for the user to enter their
+username and password. If the user is not authenticated and they try to access a secured endpoint, they will be
+redirected to the default login form.
+
+1. http.authorizeHttpRequests() :- This is the newer method (replacing http.authorizeRequests()) used to configure
+request authorization in Spring Security. It allows you to specify which HTTP requests should be allowed or restricted,
+depending on the authentication and roles of the user.
+
+2. .requestMatchers("/public/**").permitAll() :- requestMatchers("/public/**"): This specifies a URL pattern
+(/public/**) that matches all requests starting with /public/ (including subpaths).
+.permitAll(): This method ensures that all requests matching this pattern are allowed without any authentication. It
+means anyone can access these paths, whether they are authenticated or not.
+
+3. .requestMatchers("/admin/**").hasRole("ADMIN") :- requestMatchers("/admin/**"): This specifies a URL pattern
+(/admin/**) that matches all requests starting with /admin/.
+.hasRole("ADMIN"): This ensures that only users with the ADMIN role can access the paths matching this pattern. The
+user must be authenticated and have the necessary role to access these URLs.
+
+4. .httpBasic(Customizer.withDefaults()) :- This enables HTTP Basic Authentication, which is a simple authentication
+scheme where the client sends a username and password with each request (typically in the request header).
+Customizer.withDefaults(): This is used to apply default settings for basic HTTP authentication without any
+customization. It is the default setup for httpBasic() and is typically used if no customizations are needed.
+
+5. .csrf(AbstractHttpConfigurer::disable) :- .csrf(): CSRF (Cross-Site Request Forgery) protection is enabled by default
+in Spring Security. However, in some cases, you may want to disable it, especially in stateless applications like REST
+APIs or when using other mechanisms for security.
+AbstractHttpConfigurer::disable: This disables CSRF protection. It’s often used when the application is not using
+session-based authentication (e.g., REST APIs) or when using other methods of securing requests.
+
+6. .build() :- This is the final step to build and apply the configuration. It completes the configuration process and
+ applies the rules defined above. Without calling build(), the security configuration won’t take effect.
+
+Summary:
+http.authorizeHttpRequests(): Begins configuring authorization for HTTP requests.
+.requestMatchers("/public/**").permitAll(): Allows unrestricted access to /public/**.
+.requestMatchers("/admin/**").hasRole("ADMIN"): Requires users to have the ADMIN role to access /admin/**.
+.httpBasic(Customizer.withDefaults()): Enables HTTP Basic Authentication with default settings.
+.csrf(AbstractHttpConfigurer::disable): Disables CSRF protection.
+.build(): Applies the configuration and builds the security filter chain.
+
+By default, Spring Security also provides logout functionality. When logout is configured, a POST request to "/logout"
+will log the user out and invalidate their session.
+
+Note: Basic Authentication, by its design, is stateless.
+Some applications do mix Basic Authentication with session management for various reasons. This isn't standard behaviour
+and requires additional setup and logic. In such scenarios, once the user credentials are verified via Basic
+Authentication, a session might be established, and client is provided a session cookie. This way, the client won't
+need to send the Authorisation header with every request, and the server can rely on the session cookie to identify the
+authenticated user.
+
+When you login with Spring Security, it manages your authentication across multiple requests, despite HTTP being
+stateless.
+
+1. Session Creation:- After successful authentication, an HTTP session formed. Your authentication details are stored in
+the session.
+2. Session Cookie :- A JSESSIONID cookie is sent to your browser, which gets sent back with subsequent requests,
+helping the server recognize your session.
+3. SecurityContext :- Using the JSESSIONID, Spring Security fetches your authentication details for each request.
+4. Session Timeout :- Sessions have a limited life, If you are inactive past this limit, you're logged out.
+5. Logout :- When logging out, your session ends, and the related cookies is removed.
+6. Remember-Me :- Spring Security can remember you even after the session ends using different persistence cookie
+(typically have a longer lifespan).
+In essence, Spring security leverages sessions and cookies, mainly JSESSIONID, to ensure you remain authenticated
+across requests.
+
+
+
+Logging:- Logging is an essential aspect of application development that allows developers to monitor and troubleshoot
+their applications. Spring boot support various logging frameworks, such as Logback, Log4j2, and Java Util Logging(JUL).
+
+Logback -> Default Framework.
+Log4j2 -> Advance framework for logging like asynchronous.
+Java Util Logging(JUL) -> Default logging framework included in the Java SE, less feature-rich. Doesn't have log
+rotation.
+
+Spring Boot comes with default logging configuration that uses logback as the default Logging implementation. It provide
+good balance b/w simplicity and flexibility.
+
+Logging Levels -> Logging levels helps in categorizing log statements based on their severity. the common logging levels
+are ->
+        Trace   |
+        Debug   |
+        Info    | Increasing the severity levels
+        Warn    |
+        Error   ↓
+By default, Logging is enable for INFO, WARN, ERROR.
+
+Spring Boot provide annotations like @Log4j2 & Slf4j that we can use to automatically inject logger instances into our
+class. We will use Slf4j where @Slf4j is using to remain flexible as facade, allowing us to switch b/w logging
+implementations like Logback or Log4j2, where use @Log4j2 if you are committed to using the Log4j2 logging framework.
+
+The <configuration> element is the root element of the logback.xml file. All Logback configuration is enclosed within
+this element.
+<configuration>
+    <!--Appender and Logger configurations go here -->
+</configuration>
+
+
+
+
+
+
+
+
+
+
+
+
+
