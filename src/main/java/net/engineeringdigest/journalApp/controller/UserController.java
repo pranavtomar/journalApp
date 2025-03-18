@@ -1,8 +1,10 @@
 package net.engineeringdigest.journalApp.controller;
 
+import net.engineeringdigest.journalApp.api.response.WeatherResponse;
 import net.engineeringdigest.journalApp.entity.User;
 import net.engineeringdigest.journalApp.repository.UserRepository;
 import net.engineeringdigest.journalApp.service.UserService;
+import net.engineeringdigest.journalApp.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private WeatherService weatherService;
 
 //    @GetMapping
 //    public List<User> getAllUsers(){
@@ -47,13 +52,42 @@ public class UserController {
     }
 
 
+    @GetMapping
+    public ResponseEntity<?> greeting() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        WeatherResponse weatherResponse = weatherService.getWeather("Mumbai");
+        String greeting = "";
+        if(weatherResponse != null) {
+            greeting = ", Weather feels like " + weatherResponse.getCurrent().getFeelslike();
+        }
+        return new ResponseEntity<>("Hi " + authentication.getName() + greeting, HttpStatus.OK);
+    }
+
+
 }
 
 
 
 
 
-//    Main Class ---> controller ---> service ---> repository ---> entity { POJO(documents in NoSQL<->Row in relational) }
+
+
+
+
+
+/*
+    1. View(React, JSP, Thymeleaf) --->
+    2. Presentation Layer(Controller) --->
+    3. Business Logic Layer(Service) --->
+    4. Repository Layer(Spring Data JPA/Spring Data MongoDB Repository's interfaces :- JpaRepository, CrudRepository for Data
+       Access Abstraction or DAO(Data Access Object) pattern)--->
+    5. Persistence Layer(interacts with the database, such as JPA/Hibernate/JDBC or any other ORM framework) --->
+    6. Domain Model (Holds core business objects of an application, where Entity classes(for Represents persistent data stored
+       in the database which requires a database connection) or POJOs (Plain Old Java Objects) used to hold data as a DTO(Data Transfer Object) or for business logic
+       like Used for data transfer between layers (Controller → Service, etc.), so No Database Dependency) --->
+    7. Static Resources (CSS, SCSS JS, Images).
+*/
+
 
 
 

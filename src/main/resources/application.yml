@@ -8,6 +8,14 @@ logging:
       engineeringdigest:
         journalApp: INFO
 
+
+
+weather:
+  api:
+    key: 17cc1c4c43afaea56386bbae384de7d0
+
+
+
 #logging:
 #  level:
 #    root: Error

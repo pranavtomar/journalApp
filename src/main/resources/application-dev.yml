@@ -1,5 +1,13 @@
 
 spring:
+  redis:
+    host: redis-16468.c301.ap-south-1-1.ec2.redns.redis-cloud.com
+    port: 16468
+    password: A8eOKTz7MaVAtYS3ymHc0WzV62HAXTQv
+
+#    host: localhost
+#    port: 6379
+
   data:
     mongodb:
       uri: mongodb+srv://alokpranavsingh11619:Pranavtomar%401620@cluster0.9iqxy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
@@ -9,7 +17,12 @@ spring:
     name: journalApp
 
 server:
-  port: 8080
+  port: 8081
   servlet:
     context-path: /journal
+
+
+
+
+
 
