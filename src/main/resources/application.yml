@@ -1,14 +1,23 @@
 spring:
   profiles:
     active: dev
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: email@gmail.com
+    password: Pranavtomar@1620
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 logging:
   level:
     net:
       engineeringdigest:
         journalApp: INFO
-
-
 
 weather:
   api:
