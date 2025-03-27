@@ -1,0 +1,18 @@
+spring:
+  redis:
+    host: redis-16468.c301.ap-south-1-1.ec2.redns.redis-cloud.com
+    port: 16468
+    password: A8eOKTz7MaVAtYS3ymHc0WzV62HAXTQv
+  data:
+    mongodb:
+      uri: mongodb+srv://alokpranavsingh11619:Pranavtomar%401620@cluster0.9iqxy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      database: journalDB
+      auto-index-creation: true
+  application:
+    name: journalApp
+
+server:
+  port: 8080
+  servlet:
+    context-path: /journal
+
