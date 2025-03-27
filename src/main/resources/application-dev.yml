@@ -1,36 +1,8 @@
-
 spring:
-  kafka:
-    bootstrap-servers: pkc-921jm.us-east-2.aws.confluent.cloud:9092
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-    consumer:
-      group-id: weekly-sentiment-group
-      key-deserializer: org.apache.kafka.common.serialization.StringSerializer
-      value-deserializer: org.apache.kafka.common.serialization.StringSerializer
-      properties:
-        spring:
-          json:
-            trusted:
-              packages: net.engineeringdigest.journalApp.model
-    properties:
-      sasl:
-        mechanism: PLAIN
-        jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username='26PEE5WS7GPUXSUE' password='5Bijm0mHqsfLAYcg2enV2fFxzuuhMaa09K481RCt+Ee+VM/EwPNJBcAeoB4uk7MJ';
-      security:
-        protocol: SASL_SSL
-      session.timeout.ms: 45000
-  client:
-    id: ccloud-springboot-client-676295a0-31a1-4372-a3bc-2f7447e597cc
   redis:
     host: redis-16468.c301.ap-south-1-1.ec2.redns.redis-cloud.com
     port: 16468
     password: A8eOKTz7MaVAtYS3ymHc0WzV62HAXTQv
-
-#    host: localhost
-#    port: 6379
-
   data:
     mongodb:
       uri: mongodb+srv://alokpranavsingh11619:Pranavtomar%401620@cluster0.9iqxy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
@@ -40,12 +12,7 @@ spring:
     name: journalApp
 
 server:
-  port: 8081
+  port: 8080
   servlet:
     context-path: /journal
-
-
-
-
-
 
